@@ -9,7 +9,7 @@ def home(request):
     return render(request, 'base.html')
 
 def login(request):
-    return render(request, 'registration/login.html')
+    return render(request, 'registration/login.html', )
 
 def test(request):
     return render(request, 'content/home.html')
@@ -24,8 +24,8 @@ def signup(request):
             # This will add the user to the database
             user = form.save()
             # This is how we log a user in via code
-            login(request, user)
-            return redirect('cats_index')
+            # login(request, user)
+            return redirect('home')
         else:
             error_message = 'Invalid sign up - try again'
     # A GET or a bad POST request, so render signup.html with an empty form

@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-class Image(models.Model):
+""" class Image(models.Model):
     url = models.CharField(max_length=200)
 
 class Color(models.Model):
@@ -27,3 +27,4 @@ class Food(models.Model):
     ate_date = models.DateField(auto_now=True, auto_now_add=False)
     note = models.CharField(max_length=250)
     image = models.ForeignKey(Image, on_delete=models.CASCADE)
+ """

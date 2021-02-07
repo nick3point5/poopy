@@ -20,9 +20,9 @@ class Profile(models.Model):
 class Poop(models.Model):
     pass_date = models.DateField(auto_now=True, auto_now_add=False)
     note = models.TextField(max_length=250, null=True)
-    type = models.ForeignKey(Bristol_Type)
-    color = models.ForeignKey(Color)
-    image = models.ForeignKey(Image, on_delete=models.CASCADE)
+    type = models.ForeignKey(Bristol_Type, on_delete=models.CASCADE)
+    color = models.ForeignKey(Color, on_delete=models.CASCADE)
+    image = models.ForeignKey(Image, on_delete=models.CASCADE, null=True, default='https://hips.hearstapps.com/cosmouk.cdnds.net/15/21/nrm_1432138418-o-poop-emoji-ice-cream-facebook.jpg')
     user = models.ForeignKey(User,on_delete=models.CASCADE)
 
 class Food(models.Model):
@@ -30,6 +30,6 @@ class Food(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     ate_date = models.DateField(auto_now=True, auto_now_add=False)
     note = models.TextField(max_length=250, null=True)
-    image = models.ForeignKey(Image, on_delete=models.CASCADE)
+    image = models.ForeignKey(Image, on_delete=models.CASCADE, null=True)
     def __str__(self):
         return self.name

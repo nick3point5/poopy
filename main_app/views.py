@@ -17,13 +17,34 @@ def food_add(request):
 
     return render(request, 'content/food_form.html')
 
-def poop_add(request):
-    form =  PoopForm()
+def poop_add(request, id=0):
+    if request.method == "GET":
+        if id == 0:
+            form = PoopForm()
+        else:
+            poop = Poop.objects.get(pk=id)
+            form = PoopForm(instance=poop)
+        context = {
+            'form': form
+        }
+        return render(request, "content/poop_form.html", context)
+    else:
+        if id == 0:
+            form = PoopForm(request.POST)
+        else:
+            Poop = Poop.objects.get(pk=id)
+            form = PoopForm(request.POST,instance= Poop)
+        if form.is_valid():
+            form.save()
+        return redirect('home')
+
+
+"""     form =  PoopForm()
     print(form)
     context = {
         'form': form
     }
-    return render(request, 'content/poop_form.html',context)
+    return render(request, 'content/poop_form.html',context) """
 
 
 def login(request):

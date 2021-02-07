@@ -1,5 +1,5 @@
 from django import forms
-from .models import Poop
+from .models import Bristol_Type, Color, Poop
 
 
 class PoopForm(forms.ModelForm):
@@ -7,16 +7,18 @@ class PoopForm(forms.ModelForm):
     class Meta:
         model = Poop
         fields = [
-            'Bristol_Type',
+            'type',
             'note',
             'color',
             ]
         labels = {
-            'Bristol_Type':'Type',
+            'type':'Bristol Type',
             'note':'Notes',
+            'color':'Color'
         }
 
     def __init__(self, *args, **kwargs):
         super(PoopForm,self).__init__(*args, **kwargs)
         self.fields['color'].empty_label = "Select"
+        self.fields['type'].empty_label = "Select"
 

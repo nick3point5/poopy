@@ -11,15 +11,21 @@
             <button type="submit">Add food</button>
         </form>
     </div>
-    <a href="{% url 'poop_form' %}">Add poop</a>
-    {% for poop in poop_list %}
-        <div class="card">
-            <card-content>
-                <p>{{poop.type}}</p>
-                <p>{{poop.color}}</p>
-                <p>{{poop.pass_date}}</p>
-            </card-content>
-        </div>
-    {% endfor %}
+    <a href="{% url 'poop_form' 0%}">Add poop</a>
+    <div class="col s6">
+        {% for poop in poop_list %}
+            <div class="card">
+                <card-content>
+                    <p>{{poop.type}}</p>
+                    <p>{{poop.color}}</p>
+                    <p>{{poop.pass_date}}</p>
+                    <p>{{poop.note}}</p>
+                    <a href="{% url 'poop_form' poop.id%}">Edit</a>
+                    <a href="{% url 'poop_delete' poop.id%}">Delete</a>
+                </card-content>
+            </div>
+        {% endfor %}
+    </div>
+
 
 {% endblock content %}

@@ -1,10 +1,14 @@
-document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('select');
-    var instances = M.FormSelect.init(elems, options);
-  });
-
-  // Or with jQuery
-
   $(document).ready(function(){
     $('select').formSelect();
+  });
+
+  $(document).ready(function(){
+    $('.datepicker').datepicker();
+    var inputs = document.querySelectorAll('.datepicker');
+    var datepickers = M.Datepicker.init(inputs);
+    datepickers[0].open();
+    });
+
+  $(document).ready(function(){
+    $('.timepicker').timepicker().defaultTime();
   });

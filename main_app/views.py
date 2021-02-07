@@ -19,17 +19,17 @@ def home(request):
     }
     return render(request, 'content/home.html', context)
 
-def food_add(request):
+def food(request):
 
     return render(request, 'content/food_form.html')
 
-def poop_add(request, id=0):
+def poop(request, id=0):
     if request.method == "GET":
         if id == 0:
             form = PoopForm()
         else:
-            poop = Poop.objects.get(pk=id)
-            form = PoopForm(instance=poop)
+            this_poop = Poop.objects.get(pk=id)
+            form = PoopForm(instance=this_poop)
         context = {
             'form': form
         }
@@ -38,14 +38,19 @@ def poop_add(request, id=0):
         if id == 0:
             form = PoopForm(request.POST)
         else:
-            Poop = Poop.objects.get(pk=id)
-            form = PoopForm(request.POST,instance= Poop)
+            this_poop = Poop.objects.get(pk=id)
+            form = PoopForm(request.POST,instance= this_poop)
         if form.is_valid():
             new_poop = form.save(commit=False)
             new_poop.user_id = request.user.id
+            print(new_poop)
             new_poop.save()
         return redirect('home')
 
+def poop_delete(request,id):
+    poop = Poop.objects.get(pk=id)
+    poop.delete()
+    return redirect('/home')
 
 def login(request):
     return render(request, 'registration/login.html', )

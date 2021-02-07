@@ -1,5 +1,5 @@
 from django import forms
-from .models import Bristol_Type, Color, Poop
+from .models import Poop, Food
 
 
 class PoopForm(forms.ModelForm):
@@ -22,3 +22,15 @@ class PoopForm(forms.ModelForm):
         self.fields['color'].empty_label = "Select"
         self.fields['type'].empty_label = "Select"
 
+class FoodForm(forms.ModelForm):
+    
+    class Meta:
+        model = Food
+        fields = [
+            'name',
+            'note',
+            ]
+        labels = {
+            'name':'Name',
+            'note':'Notes',
+        }

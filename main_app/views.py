@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from .models import *
-from .forms import  PoopForm
+from .forms import  PoopForm, FoodForm
 
 
 
@@ -19,9 +19,29 @@ def home(request):
     }
     return render(request, 'content/home.html', context)
 
-def food(request):
-
-    return render(request, 'content/food_form.html')
+def food(request, id=0):
+    if request.method == "GET":
+        if id == 0:
+            form = FoodForm()
+        else:
+            this_food = Food.objects.get(pk=id)
+            form = FoodForm(instance=this_food)
+        context = {
+            'form': form
+        }
+        return render(request, "content/food_form.html", context)
+    else:
+        if id == 0:
+            form = FoodForm(request.POST)
+        else:
+            this_food = Food.objects.get(pk=id)
+            form = FoodForm(request.POST,instance= this_food)
+        if form.is_valid():
+            new_food = form.save(commit=False)
+            new_food.user_id = request.user.id
+            print(new_food)
+            new_food.save()
+        return redirect('home')
 
 def poop(request, id=0):
     if request.method == "GET":

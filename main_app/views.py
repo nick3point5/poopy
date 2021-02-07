@@ -11,7 +11,13 @@ def start(request):
     return render(request, 'base.html')
 
 def home(request):
-    return render(request, 'content/home.html')
+    poop_list= Poop.objects.all()
+    food_list = Food.objects.all()
+    context={
+        'poop_list':poop_list,
+        'food_list':food_list
+    }
+    return render(request, 'content/home.html', context)
 
 def food_add(request):
 
@@ -35,16 +41,10 @@ def poop_add(request, id=0):
             Poop = Poop.objects.get(pk=id)
             form = PoopForm(request.POST,instance= Poop)
         if form.is_valid():
-            form.save()
+            new_poop = form.save(commit=False)
+            new_poop.user_id = request.user.id
+            new_poop.save()
         return redirect('home')
-
-
-"""     form =  PoopForm()
-    print(form)
-    context = {
-        'form': form
-    }
-    return render(request, 'content/poop_form.html',context) """
 
 
 def login(request):

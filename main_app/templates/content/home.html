@@ -12,4 +12,14 @@
         </form>
     </div>
     <a href="{% url 'poop_form' %}">Add poop</a>
+    {% for poop in poop_list %}
+        <div class="card">
+            <card-content>
+                <p>{{poop.type}}</p>
+                <p>{{poop.color}}</p>
+                <p>{{poop.pass_date}}</p>
+            </card-content>
+        </div>
+    {% endfor %}
+
 {% endblock content %}

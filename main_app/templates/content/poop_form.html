@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form action="" method="post" autocomplete="off">
+        {% csrf_token %}
+        {% comment %} {{form.as_p}} {% endcomment %}
+        {{ form.Bristol_Type }}
+        {{ form.note }}
+        <div class="input-field col s12">
+            {{ form.color }}
+        </div>
+
+
+        <button type="submit">Log Poop</button>
+    </form>
+{% endblock content %}

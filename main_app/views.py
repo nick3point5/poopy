@@ -2,17 +2,35 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from .models import *
+from .forms import  PoopForm
+
 
 
 # Create your views here.
-def home(request):
+def start(request):
     return render(request, 'base.html')
+
+def home(request):
+    return render(request, 'content/home.html')
+
+def food_add(request):
+
+    return render(request, 'content/food_form.html')
+
+def poop_add(request):
+    form =  PoopForm()
+    print(form)
+    context = {
+        'form': form
+    }
+    return render(request, 'content/poop_form.html',context)
+
 
 def login(request):
     return render(request, 'registration/login.html', )
 
 def test(request):
-    return render(request, 'content/home.html')
+    return render(request, 'test.html')
 
 def signup(request):
     error_message = ''

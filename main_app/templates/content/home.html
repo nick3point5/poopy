@@ -1,5 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>ser</h1>
+    <div >
+        <form action="" method="get">
+            <button type="submit">Add poop</button>
+        </form>
+    </div>
+    <div >
+        <form action="" method="get">
+            <button type="submit">Add food</button>
+        </form>
+    </div>
+    <a href="{% url 'poop_form' %}">Add poop</a>
 {% endblock content %}

@@ -17,12 +17,25 @@
         {% for poop in poop_list %}
             <div class="card">
                 <card-content>
+                    <img src="{{poop.image}}" alt="">
                     <p>{{poop.type}}</p>
                     <p>{{poop.color}}</p>
                     <p>{{poop.pass_date}}</p>
                     <p>{{poop.note}}</p>
                     <a href="{% url 'poop_form' poop.id%}">Edit</a>
                     <a href="{% url 'poop_delete' poop.id%}">Delete</a>
+                </card-content>
+            </div>
+        {% endfor %}
+    </div>
+        <div class="col s6">
+        {% for food in food_list %}
+            <div class="card">
+                <card-content>
+                    <p>{{food.name}}</p>
+                    <p>{{food.note}}</p>
+                    <a href="{% url 'food_form' food.id%}">Edit</a>
+                    <a href="{% url 'food_delete' food.id%}">Delete</a>
                 </card-content>
             </div>
         {% endfor %}

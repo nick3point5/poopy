@@ -3,6 +3,8 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from .models import *
 from .forms import  PoopForm, FoodForm
+from datetime import datetime
+
 
 
 
@@ -17,6 +19,10 @@ def home(request):
         'poop_list':poop_list,
         'food_list':food_list
     }
+    for poop in poop_list:
+        dt = poop.pass_date
+        print(dt)
+        
     return render(request, 'content/home.html', context)
 
 def food(request, id=0):
@@ -39,9 +45,13 @@ def food(request, id=0):
         if form.is_valid():
             new_food = form.save(commit=False)
             new_food.user_id = request.user.id
-            print(new_food)
             new_food.save()
         return redirect('home')
+
+def food_delete(request,id):
+    food = Food.objects.get(pk=id)
+    food.delete()
+    return redirect('/home')
 
 def poop(request, id=0):
     if request.method == "GET":
@@ -63,7 +73,6 @@ def poop(request, id=0):
         if form.is_valid():
             new_poop = form.save(commit=False)
             new_poop.user_id = request.user.id
-            print(new_poop)
             new_poop.save()
         return redirect('home')
 

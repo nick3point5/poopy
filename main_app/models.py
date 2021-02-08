@@ -21,7 +21,7 @@ class Bristol_Type(models.Model):
     def __str__(self):
         return self.type
 class Profile(models.Model):
-    image = models.ForeignKey(Photo, on_delete=models.CASCADE)
+    image = models.ForeignKey(Photo, on_delete=models.CASCADE, null=True, default=1)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 class Poop(models.Model):
     pass_date = models.DateTimeField(auto_now=False, auto_now_add=False, default = datetime.now())

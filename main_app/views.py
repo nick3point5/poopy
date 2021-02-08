@@ -1,10 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+import uuid
+import boto3
 from .models import *
 from .forms import  PoopForm, FoodForm
-from datetime import datetime
 
+
+S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
+BUCKET = 'poopytoilet'
 
 
 
@@ -13,15 +17,15 @@ def start(request):
     return render(request, 'base.html')
 
 def home(request):
-    poop_list= Poop.objects.all()
-    food_list = Food.objects.all()
+    poop_list= Poop.objects.all().order_by('-pass_date')
+    food_list = Food.objects.all().order_by('-ate_date')
     context={
         'poop_list':poop_list,
         'food_list':food_list
     }
     for poop in poop_list:
-        dt = poop.pass_date
-        print(dt)
+        dt = poop.image.url
+        print()
         
     return render(request, 'content/home.html', context)
 

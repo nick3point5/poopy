@@ -3,7 +3,7 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 import uuid
 import boto3
-from .models import *
+from .models import Poop, Food, Photo
 from .forms import  PoopForm, FoodForm
 
 
@@ -23,9 +23,6 @@ def home(request):
         'poop_list':poop_list,
         'food_list':food_list
     }
-    for poop in poop_list:
-        dt = poop.image.url
-        print()
         
     return render(request, 'content/home.html', context)
 

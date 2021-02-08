@@ -7,8 +7,6 @@ from datetime import datetime
 
 class Photo(models.Model):
     url = models.CharField(max_length=10000, null=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-
     def __str__(self):
         return self.url
         

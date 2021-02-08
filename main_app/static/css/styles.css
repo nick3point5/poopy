@@ -1,0 +1,95 @@
+.flex-r {
+	display: flex;
+	flex-direction: row;
+}
+
+.center {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.chart {
+	object-fit: contain;
+	background-image: url("https://upload.wikimedia.org/wikipedia/commons/a/a7/BristolStoolChart_%28cropped%29.png");
+	height: 400px;
+	background-repeat: no-repeat;
+}
+
+textarea {
+	height: 124px;
+}
+
+.delete-btn {
+	background-color: rgb(216, 109, 109);
+	color: #000;
+}
+.delete-btn:hover {
+	background-color: #f00;
+	color: #fff;
+}
+
+.btn {
+	margin-right: 12px;
+}
+
+.notes-container {
+	width: 80%;
+	height: auto;
+	border: #000 solid 2px;
+	text-align: left;
+	padding: 12px;
+	font-size: 24px;
+	margin: 12px;
+}
+
+footer {
+	padding-top: 0;
+	text-align: right;
+}
+
+body {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+}
+
+main {
+	flex: 1 0 auto;
+}
+
+.log-content{   
+    height: 600px;
+    justify-content: space-between;
+}
+
+.show_img{  
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.img-container{ 
+    position: relative;
+    border: #000 solid 2px;
+    height: 250px;
+    width: 400px;
+}
+
+.card-text{ 
+    justify-content: space-between;
+    height: 300px;
+    width: 100%;
+}
+
+.add-btns{  
+    justify-content: space-around;
+    margin: 12px;
+}
+
+body{
+	background-color: rgb(92, 49, 0);
+}
+
+.brown{
+	background-color: rgb(209, 129, 0);
+}

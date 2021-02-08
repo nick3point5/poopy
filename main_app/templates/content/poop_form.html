@@ -1,7 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <form action="" method="post" autocomplete="off">
+<div class="row">
+<div class= "card col s7">
+<div class="chart">
+</div>
+</div>
+<div class= "card col s5">
+    <div class= "card col s12 card-content">
+    <form action="" enctype="multipart/form-data" method="post" autocomplete="off">
         {% csrf_token %}
         <div class="row">
             <div class="input-field col s6">
@@ -14,15 +21,19 @@
                 <label>Bristol Type</label>
             </div>
         </div>
-{% comment %}         <label>Date</label>
-        <input type="text" name='date' class="datepicker">
-        <label>Time</label>
-        <input type="text" name='time' class="timepicker"> {% endcomment %}
-
+        <div class="col s12">
             <label>Notes</label>
             {{ form.note }}
+        </div>
+        <div class="col s12">
+            <label>Upload Picture</label>
+            <br>
+            <input type="file" name="photo-file">
+        </div>
 
-
-        <button type="submit" class="btn">Log Poop</button>
+        <input type="submit" class="btn right" value="Log Poop">
     </form>
+    </div>
+</div>
+</div>
 {% endblock content %}

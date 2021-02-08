@@ -5,17 +5,16 @@ import uuid
 import boto3
 from .models import Poop, Food, Photo
 from .forms import  PoopForm, FoodForm
+from django.contrib.auth.decorators import login_required
 
-
-S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
+S3_BASE_URL = 'https://s3-us-east-2.amazonaws.com/'
 BUCKET = 'poopytoilet'
-
-
 
 # Create your views here.
 def start(request):
     return render(request, 'base.html')
 
+@login_required
 def home(request):
     poop_list= Poop.objects.all().order_by('-pass_date')
     food_list = Food.objects.all().order_by('-ate_date')
@@ -26,7 +25,15 @@ def home(request):
         
     return render(request, 'content/home.html', context)
 
+@login_required
+def food_delete(request,id):
+    food = Food.objects.get(pk=id)
+    food.delete()
+    return redirect('/home')
+
+@login_required
 def food(request, id=0):
+    photo = None
     if request.method == "GET":
         if id == 0:
             form = FoodForm()
@@ -39,22 +46,44 @@ def food(request, id=0):
         return render(request, "content/food_form.html", context)
     else:
         if id == 0:
+            photo_file = request.FILES.get('photo-file', None)
+            if photo_file:
+                s3 = boto3.client('s3')
+                key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+                try:
+                    s3.upload_fileobj(photo_file, BUCKET, key)
+                    url = f"{S3_BASE_URL}{BUCKET}/{key}"
+                    photo = Photo(url=url)
+                except:
+                    print('An error occurred uploading file to S3')
+
             form = FoodForm(request.POST)
         else:
+            photo_file = request.FILES.get('photo-file', None)
+            if photo_file:
+                s3 = boto3.client('s3')
+                key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+                try:
+                    s3.upload_fileobj(photo_file, BUCKET, key)
+                    url = f"{S3_BASE_URL}{BUCKET}/{key}"
+                    photo = Photo(url=url)
+                except:
+                    print('An error occurred uploading file to S3')
             this_food = Food.objects.get(pk=id)
             form = FoodForm(request.POST,instance= this_food)
-        if form.is_valid():
-            new_food = form.save(commit=False)
-            new_food.user_id = request.user.id
-            new_food.save()
-        return redirect('home')
 
-def food_delete(request,id):
-    food = Food.objects.get(pk=id)
-    food.delete()
-    return redirect('/home')
+    if form.is_valid():
+        new_food = form.save(commit=False)
+        if photo:
+            photo.save()
+            new_food.image_id = photo.id
+        new_food.user_id = request.user.id
+        new_food.save()
+    return redirect('home')
 
+@login_required
 def poop(request, id=0):
+    photo = None
     if request.method == "GET":
         if id == 0:
             form = PoopForm()
@@ -67,26 +96,50 @@ def poop(request, id=0):
         return render(request, "content/poop_form.html", context)
     else:
         if id == 0:
+            photo_file = request.FILES.get('photo-file', None)
+            if photo_file:
+                s3 = boto3.client('s3')
+                key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+                try:
+                    s3.upload_fileobj(photo_file, BUCKET, key)
+                    url = f"{S3_BASE_URL}{BUCKET}/{key}"
+                    photo = Photo(url=url)
+                except:
+                    print('An error occurred uploading file to S3')
+
             form = PoopForm(request.POST)
         else:
+            photo_file = request.FILES.get('photo-file', None)
+            if photo_file:
+                s3 = boto3.client('s3')
+                key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+                try:
+                    s3.upload_fileobj(photo_file, BUCKET, key)
+                    url = f"{S3_BASE_URL}{BUCKET}/{key}"
+                    photo = Photo(url=url)
+                except:
+                    print('An error occurred uploading file to S3')
             this_poop = Poop.objects.get(pk=id)
             form = PoopForm(request.POST,instance= this_poop)
-        if form.is_valid():
-            new_poop = form.save(commit=False)
-            new_poop.user_id = request.user.id
-            new_poop.save()
-        return redirect('home')
 
+    if form.is_valid():
+        new_poop = form.save(commit=False)
+        if photo:
+            photo.save()
+            new_poop.image_id = photo.id
+        new_poop.user_id = request.user.id
+        new_poop.save()
+    return redirect('home')
+
+@login_required
 def poop_delete(request,id):
     poop = Poop.objects.get(pk=id)
     poop.delete()
     return redirect('/home')
 
+
 def login(request):
     return render(request, 'registration/login.html', )
-
-def test(request):
-    return render(request, 'test.html')
 
 def signup(request):
     error_message = ''

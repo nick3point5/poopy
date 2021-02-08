@@ -14,11 +14,11 @@
   <script defer src="{% static 'js/app.js' %}"></script>
 </head>
 <body>
-  <header class="navbar-fixed">
+  <header class="navbar-fixed brown">
     <nav>
-      <div class="nav-wrapper">
+      <div class="nav-wrapper brown">
         <ul>
-          <li><a href="{% url 'start' %}" class="left brand-logo">&nbsp;&nbsp;Poopy</a></li>
+          <li><a href="{% url 'home' %}" class="left brand-logo">&nbsp;&nbsp;Poopy</a></li>
         </ul>
         <ul class="right">
           {% if user.is_authenticated %}
@@ -35,7 +35,7 @@
     {% block content %}
     {% endblock content %}
   </main>
-  <footer class="page-footer">
+  <footer class="page-footer brown">
     <div class="right">All Rights Reserved, &copy; 2021 Poopy &nbsp;</div>
   </footer>
 </body>

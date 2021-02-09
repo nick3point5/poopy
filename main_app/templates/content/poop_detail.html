@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="flex-r add-btns">
+        <a href="{% url 'poop_form' 0%}" class="btn" >Add poop</a>
+        <a href="{% url 'food_form' 0%}" class="btn" >Add food</a>
+    </div>
+    <div class="row">
+    <div class="col s6">
+        {% for poop in poop_list %}
+            <div class="card">
+                <div class="card-content center log-content">
+                    <div class="img-container">
+                        <img src="{{poop.image.url}}" alt="" class="show_img">
+                    </div>
+                    <div class="card-text center">
+                        <p>{{poop.pass_date}}</p>
+                        <div class="flex-r">
+                            <h5>Bristol Type:&nbsp</h5>
+                            <h5>{{poop.type}}</h5>
+                        </div>
+                        <div class="flex-r">
+                            <h5>Color:&nbsp</h5>
+                            <h5>{{poop.color}}</h5>
+                        </div>
+                        <div class="notes-container">
+                            <p>{{poop.note}}</p>
+                        </div>
+                        <div class="flex-r btn-container">
+                            <a href="{% url 'poop_form' poop.id%}" class="btn edit-btn">Edit</a>
+                            <a href="{% url 'poop_delete' poop.id%}" class="btn delete-btn">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+        <div class="col s6">
+        {% for food in food_list %}
+            <div class="card">
+                <div class="card-content center log-content">
+                    <div class="img-container">
+                        <img src="{{food.image.url}}" alt="" class="show_img">
+                    </div>
+                    <div class="card-text center">
+                        <p>{{food.ate_date}}</p>
+                        <div>
+                            <h2>{{food.name}}</h2>
+                        </div>
+                        <div class="notes-container">
+                            <p>{{food.note}}</p>
+                        </div>
+                        <div class="flex-r  btn-container">
+                            <a href="{% url 'food_form' food.id%}" class="btn edit-btn" >Edit</a>
+                            <a href="{% url 'food_delete' food.id%}" class="btn delete-btn" >Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    </div>
+
+
+
+{% endblock content %}
